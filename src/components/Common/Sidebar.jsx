@@ -14,9 +14,7 @@ import InventoryIcon from '@mui/icons-material/Inventory';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 
-const drawerWidth = 240;
-
-function Sidebar() {
+const Sidebar = ({ drawerWidth }) => {
   const menuItems = [
     { text: 'Dashboard', icon: <DashboardIcon />, path: '/dashboard' },
     { text: 'Add Supply', icon: <AddBoxIcon />, path: '/supplies/input' },
@@ -29,10 +27,11 @@ function Sidebar() {
   return (
     <Drawer
       variant="permanent"
+      className="sidebar"
       sx={{
         width: drawerWidth,
         flexShrink: 0,
-        [`& .MuiDrawer-paper`]: { width: drawerWidth, boxSizing: 'border-box', marginTop: '64px' },
+        [`& .MuiDrawer-paper`]: { width: drawerWidth, boxSizing: 'border-box', mt: '64px' },
       }}
     >
       <List>
@@ -45,6 +44,6 @@ function Sidebar() {
       </List>
     </Drawer>
   );
-}
+};
 
 export default Sidebar;

@@ -1,37 +1,37 @@
 // src/App.js
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { ThemeProvider } from '@mui/material/styles';
-import theme from './theme';
-import Navbar from './components/Common/Navbar';
-import Sidebar from './components/Common/Sidebar';
-import Footer from './components/Common/Footer';
-
+import Layout from './components/Common/Layout';
 import LoginPage from './pages/LoginPage';
 import DashboardPage from './pages/DashboardPage';
-import SupplyInputPage from './pages/SupplyInputPage';
-import TestingStatusPage from './pages/TestingStatusPage';
-import InventoryPage from './pages/InventoryPage';
-import ReportsPage from './pages/ReportsPage';
-import AdminPage from './pages/AdminPage';
+import ProtectedRoute from './components/Common/ProtectedRoute';
+import { ThemeProvider } from '@mui/material/styles';
+import theme from './theme';
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
       <Router>
-        <Navbar />
-        <Sidebar />
         <Routes>
+          {/* Public Route */}
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/dashboard" element={<DashboardPage />} />
-          <Route path="/supplies/input" element={<SupplyInputPage />} />
-          <Route path="/testing-status" element={<TestingStatusPage />} />
-          <Route path="/inventory" element={<InventoryPage />} />
-          <Route path="/reports" element={<ReportsPage />} />
-          <Route path="/admin" element={<AdminPage />} />
-          <Route path="*" element={<LoginPage />} />
+
+          {/* Protected Routes */}
+          <Route
+            path="/*"
+            element={
+              <ProtectedRoute>
+                <Layout>
+                  <Routes>
+                    <Route path="/dashboard" element={<DashboardPage />} />
+                    {/* Add other protected routes here */}
+                    <Route path="*" element={<DashboardPage />} />
+                  </Routes>
+                </Layout>
+              </ProtectedRoute>
+            }
+          />
         </Routes>
-        <Footer />
       </Router>
     </ThemeProvider>
   );
